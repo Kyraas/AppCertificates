@@ -1,0 +1,9 @@
+/build
+/dist
+/Include
+/Lib
+/mso300E.tmp
+/pyvenv.cfg
+/Scripts
+/__pycache__
+/Таблица сертификатов.spec

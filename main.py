@@ -546,7 +546,6 @@ class Table(QMainWindow, Ui_MainWindow):
             self.model_fsb.exec(yellow_filter)
             self.row_count_status()
 
-
     # 4. Сертификат истечёт менее, чем через полгода
     # (почему-то пропадает последний столбец)
     def gray(self):
@@ -584,7 +583,6 @@ class Table(QMainWindow, Ui_MainWindow):
         if self.radioButton_white_fsb.isChecked():
             self.model_fsb.exec(white_filter)
             self.row_count_status()
-
 
     # Сброс флагов
     def reset_checkBoxes(self):

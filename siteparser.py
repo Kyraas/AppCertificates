@@ -27,14 +27,31 @@ HEADERS_FSB = {
 
 warnings.filterwarnings('ignore', 'Unverified HTTPS request.*')
 
+
+# Находим ссылку для скачивания реестра ФСБ
+def get_download_href(html):
+    # Парсим полученные данные сайта
+    soup = BeautifulSoup(html, "html.parser")
+
+    # Находим нужную секцию, содержащую ссылку для скачивания
+    section = soup.find("section", class_="main clearfix")
+
+    # Находим ссылку
+    download_line = section.find("a", href=True)
+
+    # Совмещаем в единную ссылку для скачивания
+    url = 'http://clsz.fsb.ru/' + download_line['href']
+    return url
+
+
 # Скачиваем файл с таблицей сертификатов с сайта
-def download_file(website):
+def download_file(website, data):
     if website == "FSTEK":
         url = "https://reestr.fstec.ru/reg3?option=com_rajax&module=rfiles&method=download&format=file&mod=209&file=1"
         headers = HEADERS_FSTEK
         file_name = "fstek_reg.csv"
     elif website == "FSB":
-        url = "http://clsz.fsb.ru/files/download/svedeniya_po_sertifikatam_15032023.doc"
+        url = get_download_href(data)
         headers = HEADERS_FSB
         file_name = "fsb_reg.doc"
     file = os.getcwd() + "\\" + file_name
@@ -76,7 +93,7 @@ def parse(website, get_date=False):
             if get_date and website == "FSTEK":
                 return get_update_date(html.text)
             else:
-                download_file(website)
+                download_file(website, html.text)
         else:
             return False
     except exceptions.ConnectionError:

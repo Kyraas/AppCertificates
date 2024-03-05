@@ -189,7 +189,7 @@ class FsbTableModel(QAbstractTableModel):
     # Принимает первый вложенный список и возвращает длину.
     # (только если все строки имеют одинаковую длину)
     def columnCount(self, index = QModelIndex()):
-        return 6
+        return 5
 
     # Параметр role описывает, какого рода информацию
     # метод должен возвращать при этом вызове.

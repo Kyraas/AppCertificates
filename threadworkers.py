@@ -159,8 +159,7 @@ class WorkerFsb(QObject):
         self.DirHtml = os.getcwd() + "\\fsb_reg.files"
         self.df = None
         self.headers = [
-            "id", "date_end", "name",
-            "function", "manufacturer"
+            "id", "date_end", "name", "function"
             ]
 
     def run(self):
@@ -193,9 +192,6 @@ class WorkerFsb(QObject):
     # На конвертирование в html уходит 4 сек
     def convert_word_to_html(self):
         doc = win32.GetObject(self.fileNameDoc, pythoncom.CoInitialize())
-        # word_app = win32.Dispatch(self.fileNameDoc, pythoncom.CoInitialize())
-        # word_app.Visible = False
-        # doc = word_app.Documents.Open(self.fileNameDoc)
         doc.SaveAs(FileName=self.fileNameHtml, FileFormat=8)
         doc.Close()
         os.remove(self.fileNameDoc)
@@ -215,7 +211,7 @@ class WorkerFsb(QObject):
         shutil.rmtree(self.DirHtml)
 
         # Убираем дублирующиеся колонки
-        df = df.drop(df.columns[[0, 2, 4, 6, 8, 10]], axis=1)
+        df = df.drop(df.columns[[0, 2, 4, 6, 8]], axis=1)
         df = df[:-1]
         df.columns = self.headers
         date_column = df['date_end']
